@@ -7,9 +7,15 @@ import { VatCategory } from './vat-categories.service';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
+
 export class AppComponent {
   invoiceLines: InvoiceLine[] = [];
-  invoice: Invoice;
+  invoice: Invoice = {
+    invoiceLines: [],
+    totalPriceExclusiveVat: 0,
+    totalPriceInclusiveVat: 0,
+    totalVat: 0
+  };
 
   product = '';
   priceInclusiveVat = 0;
@@ -21,5 +27,18 @@ export class AppComponent {
 
   addInvoice() {
     // ADD necessary code here
+    console.log(this.vatCategories[this.vatCategoryString]);
+    const invoiceLine: InvoiceLine = {
+      priceInclusiveVat: this.priceInclusiveVat,
+      product: this.product,
+      vatCategory: this.vatCategories[this.vatCategoryString]
+    };
+    this.invoiceLines.push(invoiceLine);
+    this.invoice = this.invoiceCalculator.CalculateInvoice(this.invoiceLines);
+    console.log(this.invoice);
+
+    this.product = '';
+    this.priceInclusiveVat = 0;
+    this.vatCategoryString = 'Food';
   }
 }

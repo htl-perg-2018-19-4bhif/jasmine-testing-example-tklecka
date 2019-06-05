@@ -13,6 +13,12 @@ describe('VatCategoriesService', () => {
     expect(service.getVat(VatCategory.Food)).toBe(20);
   });
 
+  it('should return correct VAT for plants', () => {
+    const service = new VatCategoriesService();
+
+    expect(service.getVat(VatCategory.Plants)).toBe(13);
+  });
+
   it('should return NaN for unknown category', () => {
     const service = new VatCategoriesService();
 
